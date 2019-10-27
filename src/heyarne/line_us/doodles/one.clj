@@ -1,4 +1,4 @@
-(ns heyarne.doodles.one
+(ns heyarne.line-us.doodles.one
   (:require [clojure2d.core :as c2d]
             [clojure2d.color :as color]
             [infix.macros :refer [infix]]

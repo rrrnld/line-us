@@ -1,16 +1,12 @@
-(ns heyarne.connection
+(ns heyarne.line-us.connection
   (:require [clojure.java.io :as io])
   (:import [java.net Socket]))
 
-(def url "line-us.lan")
-(def port 1337)
-
-(defn open-socket []
+(defn connect
+  [url port]
   (Socket. url port))
 
-(def s (open-socket))
-
-(defn close-socket [^Socket line-us]
+(defn disconnect [^Socket line-us]
   (.close line-us))
 
 (defn read-response [^Socket line-us]

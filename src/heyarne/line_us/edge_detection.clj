@@ -1,4 +1,4 @@
-(ns heyarne.edge-detection
+(ns heyarne.line-us.edge-detection
   (:require [clojure.set :as set]
             [opencv4.core :as cv]
             [opencv4.colors.rgb :as rgb]
