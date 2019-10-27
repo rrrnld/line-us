@@ -31,22 +31,40 @@
   (let [[min-v# max-v#] (get drawing-area (keyword (name coord)))]
     `(when-not (< ~(dec min-v#) ~coord ~(inc max-v#))
        (throw (IllegalArgumentException.
-               (str ~(name coord) " should be between [" ~(dec min-v#) ", " ~(inc max-v#) "] but is " ~coord))))))
+               (str ~(name coord) " should be in range [" ~min-v# ", " ~max-v# "] but is " ~coord))))))
+
+(defn- send-command! [^Socket line-us ^String raw-cmd]
+  ;; this is basically taken from the Processing example code and the processing
+  ;; "Client" class
+  (doto (io/output-stream line-us)
+    (.write (.getBytes (str raw-cmd "\0")))
+    (.flush))
+  ;; wait for the response
+  (let [res (read-response line-us)]
+    (if-not (re-find #"^(ok|hello)" res)
+      (throw (Exception. res))
+      res)))
 
 (defn send-movement! [^Socket line-us [^int x ^int y ^int z :as coords]]
   (validate-coord x)
   (validate-coord y)
   (validate-coord z)
-  ;; this is basically taken from the Processing example code and the processing
-  ;; "Client" class
-  (doto (io/output-stream line-us)
-    (.write (.getBytes (str "G01 X" x " Y" y " Z" z "\0")))
-    (.flush))
-  ;; wait for the response
-  (let [res (read-response line-us)]
-    (if-not (re-find #"^ok" res)
-      (throw (Exception. res))
-      coords)))
+  (send-command! line-us (str "G01 X" x " Y" y " Z" z))
+  coords)
 
-(defn move-home [^Socket line-us]
+(defn move-home! [^Socket line-us]
   (send-movement! line-us [1000 1000 1000]))
+
+(defn- parse-coords [^String raw-coords]
+  (->>
+   (re-find #"X:(-?\d+) Y:(\d+) Z:(\d+)" raw-coords)
+   (rest)
+   (mapv #(Integer/parseInt % 10))))
+
+(defn move-up! [^Socket line-us]
+  (let [[x y _] (parse-coords (send-command! line-us "M114"))]
+    (send-movement! line-us [x y 1000])))
+
+(defn move-down! [^Socket line-us]
+  (let [[x y _] (parse-coords (send-command! line-us "M114"))]
+    (send-movement! line-us [x y 200])))
