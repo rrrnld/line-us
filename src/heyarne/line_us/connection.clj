@@ -2,6 +2,12 @@
   (:require [clojure.java.io :as io])
   (:import [java.net Socket]))
 
+;; https://github.com/Line-us/Line-us-Programming/blob/master/Documentation/LineUsDrawingArea.pdf
+(def drawing-area
+  {:x [-1000 1000]
+   :y [650 1775]
+   :z [0 1000]})
+
 (defn connect
   [url port]
   (Socket. url port))
@@ -21,16 +27,16 @@
 
 (defmacro validate-coord
   "Throws an exception when a coordinate is outside of the drawable area"
-  [coord min-v max-v]
-  `(when-not (< ~(dec min-v) ~coord ~(inc max-v))
-     (throw (IllegalArgumentException.
-             (str ~(name coord) " should be between [" ~(dec min-v) ", " ~(inc max-v) "] but is " ~coord)))))
+  [coord]
+  (let [[min-v# max-v#] (get drawing-area (keyword (name coord)))]
+    `(when-not (< ~(dec min-v#) ~coord ~(inc max-v#))
+       (throw (IllegalArgumentException.
+               (str ~(name coord) " should be between [" ~(dec min-v#) ", " ~(inc max-v#) "] but is " ~coord))))))
 
 (defn send-movement! [^Socket line-us [^int x ^int y ^int z :as coords]]
-  ;; https://github.com/Line-us/Line-us-Programming/blob/master/Documentation/LineUsDrawingArea.pdf
-  (validate-coord x -1000 1000)
-  (validate-coord y 650 1775)
-  (validate-coord z 0 1000)
+  (validate-coord x)
+  (validate-coord y)
+  (validate-coord z)
   ;; this is basically taken from the Processing example code and the processing
   ;; "Client" class
   (doto (io/output-stream line-us)
@@ -44,8 +50,3 @@
 
 (defn move-home [^Socket line-us]
   (send-movement! line-us [1000 1000 1000]))
-
-(move-home s)
-(def msg *1)
-
-(send-movement! s [100 1000 1000])
