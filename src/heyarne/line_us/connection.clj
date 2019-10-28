@@ -46,8 +46,8 @@
       res)))
 
 (defn send-movement!
-  "Moves the arm to the [x y z] vector that is coord. Coordinates are rounded
-  and validated to be inside the valid drawing area."
+  "Moves the arm to the [x y z] vector that is coord. Coordinates are validated
+  to be inside the valid drawing area."
   [^Socket line-us [x y z :as coords]]
   (validate-coord x)
   (validate-coord y)
