@@ -4,8 +4,8 @@
 
 ;; https://github.com/Line-us/Line-us-Programming/blob/master/Documentation/LineUsDrawingArea.pdf
 (def drawing-area
-  {:x [-1000 1000]
-   :y [650 1775]
+  {:x [800 1700]
+   :y [-900 900]
    :z [0 1000]})
 
 (defn connect
@@ -45,7 +45,10 @@
       (throw (Exception. res))
       res)))
 
-(defn send-movement! [^Socket line-us [^int x ^int y ^int z :as coords]]
+(defn send-movement!
+  "Moves the arm to the [x y z] vector that is coord. Coordinates are rounded
+  and validated to be inside the valid drawing area."
+  [^Socket line-us [x y z :as coords]]
   (validate-coord x)
   (validate-coord y)
   (validate-coord z)
