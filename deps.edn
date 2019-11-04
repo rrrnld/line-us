@@ -4,4 +4,7 @@
  {origami {:mvn/version "4.0.0-3"}
   thi.ng/geom {:mvn/version "1.0.0-RC4"}
   rm-hull/infix {:mvn/version "0.3.3"}
-  clojure2d {:mvn/version "1.1.0"}}}
+  clojure2d {:mvn/version "1.1.0"}}
+ 
+ :aliases
+ {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-554"}}}}}
