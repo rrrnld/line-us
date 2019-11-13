@@ -12,7 +12,7 @@
   (+ min-t (* (- max-t min-t) (/ (- v min-v) (- max-v min-v)))))
 
 (defn setup [canvas]
-  (let [gap 5
+  (let [gap 10
         segment-padding (* 25 gap)]
     {:lines (for [y (range gap (inc (- (:h canvas) gap)) gap)
                   :let [perc (/ (- y gap) (- (:h canvas) (* 2 gap)))
@@ -34,6 +34,9 @@
 
 (defn update-state [canvas state]
   state)
+
+(defn rescale [g01 bounds]
+  )
 
 (defn state->g01
   "Converts the state to plotting coordinates; scales the coordinates to fill
@@ -76,7 +79,7 @@
       (println "Done!"))))
 
 (defn -main [& args]
-  (let [canvas (c2d/canvas 400 400)]
+  (let [canvas (c2d/canvas 225 450)]
     (c2d/show-window
      {:window-name "Doodle One"
       :canvas canvas
