@@ -3,8 +3,10 @@
             [thi.ng.math.core :as m]
             [thi.ng.geom.core :as g]
             [thi.ng.geom.vector :as v]
-            [thi.ng.geom.rect :as r]
-            [thi.ng.geom.circle :as c]))
+            [thi.ng.geom.circle :as c]
+            [heyarne.line-us.gcode :refer [->gcode]]))
+
+(declare sketch)
 
 (defn lerp
   "Normalizes a value from [min-v, max-v] to [min-t, max-t]"
@@ -43,6 +45,8 @@
                  (let [state (c2d/get-state window)]
                    (draw-state canvas state)
                    (update-state canvas state)))})))
+
+(c2d/get-state sketch)
 
 (comment
   ;; to run the sketch, evaluate this line:

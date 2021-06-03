@@ -84,6 +84,8 @@
                    (draw-state canvas state)
                    (c2d/set-state! window (update-state canvas state))))})))
 
+(declare sketch)
+
 ;; reset when "r" is pressed
 (defmethod c2d/key-pressed ["Doodle Six" \r] [_event _state]
   (let [c (c2d/get-canvas sketch)]

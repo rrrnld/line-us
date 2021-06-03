@@ -1,13 +1,9 @@
 (ns heyarne.line-us.doodles.seven
   (:require [clojure2d.core :as c2d]
             [thi.ng.math.core :as m]
-            [thi.ng.math.noise :as n]
             [thi.ng.geom.core :as g]
             [thi.ng.geom.circle :as c]
-            [thi.ng.geom.line :as l]
-            [thi.ng.geom.polygon :as p]
-            [thi.ng.geom.rect :as r]
-            [thi.ng.geom.vector :as v])
+            [thi.ng.geom.polygon :as p])
   (:import [thi.ng.geom.types Polygon2 Rect2]))
 
 (declare sketch)
