@@ -75,7 +75,7 @@
 (defn -main [& args]
   (let [canvas (c2d/canvas 300 400)]
     (c2d/show-window
-     {:window-name "Doodle Three"
+     {:window-name "Doodle Four"
       :canvas canvas
       :state (setup canvas)
       :draw-fn (fn [canvas window _frame _local-state]

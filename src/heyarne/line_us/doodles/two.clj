@@ -26,7 +26,7 @@
                   (g/translate (m/* t i))
                   (g/translate (m/* (v/vec2 -10 -7.35) 6)))))}))
 
-(reset sketch)
+#_(reset sketch)
 
 (defn reset [w]
   (c2d/set-state! w (setup (c2d/get-canvas w))))

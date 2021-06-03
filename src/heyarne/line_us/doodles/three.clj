@@ -9,6 +9,10 @@
             [thi.ng.geom.vector :as v]
             [thi.ng.geom.circle :as c]))
 
+;; FIXME: This is not executable at the moment:
+;; Execution error (UnsupportedOperationException) at heyarne.line-us.doodles.three/randlines (three.clj:35).
+;; nth not supported on this type: Rect2
+
 (defn lerp
   "Normalizes a value from [min-v, max-v] to [min-t, max-t]"
   [v min-v max-v min-t max-t]
@@ -26,8 +30,6 @@
   ([a b] (cons a (lazy-seq (fibonacci b (+ a b))))))
 
 (def gaps (cons 0 (take 5 (rest (fibonacci)))))
-
-(g/bo)
 
 (defn randlines [{:keys [size] :as _bounds} gap]
   ;; - generate a random line just outside of the drawing area
@@ -48,8 +50,6 @@
        (l/line2 (* -0.5 max-length) 0 (* 0.5 max-length) 0)
        (g/rotate theta)
        (g/translate [0 y-off])))))
-
-(randlines (r/rect 100) 3)
 
 (defn setup [{:keys [w h] :as canvas}]
   (let [gap 3]
@@ -84,7 +84,7 @@
 
 ;; reset when "r" is pressed
 (defmethod c2d/key-pressed ["Doodle Three" \r] [_event _state]
-  (reset sketch))
+  #_(reset sketch))
 
 (comment
   ;; to run the sketch, evaluate this line:
